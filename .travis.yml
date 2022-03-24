@@ -5,7 +5,8 @@ jdk:
 branches:
   only:
     - master
-    - feature/travis
+    - develop
+    - feature/travis-ci
 
 before_install:
   - git clone https://github.com/elastic/logstash.git
