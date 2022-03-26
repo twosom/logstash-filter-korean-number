@@ -46,7 +46,8 @@ public class KoreanNumber implements Filter {
             for (String field : fieldList) {
                 Object objectFieldValue = event.getField(field);
                 if (objectFieldValue instanceof String) {
-                    process(matchListener, event, field, (String) objectFieldValue);
+                    process(event, field, (String) objectFieldValue);
+                    matchListener.filterMatched(event);
                 } else {
                     event.tag("wrong value on field [" + field + "]");
                 }
@@ -55,11 +56,10 @@ public class KoreanNumber implements Filter {
         return events;
     }
 
-    private void process(FilterMatchListener matchListener, Event event, String field, String fieldValue) {
+    private void process(Event event, String field, String fieldValue) {
         fieldValue = fieldValue.replaceAll("\\s", "");
         String normalizedNumber = koreanNumberFilter.normalizeNumber(fieldValue);
         event.setField(field, normalizedNumber);
-        matchListener.filterMatched(event);
     }
 
     @Override
